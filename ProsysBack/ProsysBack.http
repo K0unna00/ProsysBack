@@ -1,0 +1,6 @@
+@ProsysBack_HostAddress = http://localhost:5139
+
+GET {{ProsysBack_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
