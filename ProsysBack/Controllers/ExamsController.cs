@@ -53,10 +53,8 @@ public class ExamsController : ControllerBase
         return Created();
     }
 
-  
-
     [HttpPut]
-    public async Task<IActionResult> Update(ExamVM ExamVM)
+    public async Task<IActionResult> Update(ExamDTO ExamVM)
     {
         var Exam = _mapper.Map<Exam>(ExamVM);
 
