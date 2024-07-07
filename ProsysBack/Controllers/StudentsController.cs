@@ -58,7 +58,7 @@ public class StudentsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var result = await _studentRepository.DeleteAsync(id);

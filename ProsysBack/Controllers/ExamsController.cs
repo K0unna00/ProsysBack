@@ -9,19 +9,23 @@ namespace ProsysBack.Controllers;
 [ApiController]
 public class ExamsController : ControllerBase
 {
-    private readonly IExamRepository _ExamRepository;
+    private readonly IExamRepository _examRepository;
+    private readonly IStudentRepository _studentRepository;
+    private readonly ILessonRepository _lessonRepository;
     private readonly IMapper _mapper;
 
-    public ExamsController(IExamRepository ExamRepository, IMapper mapper)
+    public ExamsController(IExamRepository ExamRepository,IStudentRepository studentRepository,ILessonRepository lessonRepository, IMapper mapper)
     {
-        _ExamRepository = ExamRepository;
+        _examRepository = ExamRepository;
+        _studentRepository = studentRepository;
+        _lessonRepository = lessonRepository;
         _mapper = mapper;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var Exams = await _ExamRepository.GetAllAsync();
+        var Exams = await _examRepository.GetAllAsync();
 
         var result = _mapper.Map<IEnumerable<ExamVM>>(Exams);
 
@@ -31,7 +35,7 @@ public class ExamsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(Guid id)
     {
-        var Exam = await _ExamRepository.GetByIdAsync(id);
+        var Exam = await _examRepository.GetByIdAsync(id);
 
         var result = _mapper.Map<ExamVM>(Exam);
 
@@ -39,29 +43,32 @@ public class ExamsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(ExamVM ExamVM)
+    public async Task<IActionResult> Create(ExamDTO examDTO)
     {
-        var Exam = _mapper.Map<Exam>(ExamVM);
 
-        await _ExamRepository.CreateAsync(Exam);
+        var exam = _mapper.Map<Exam>(examDTO);
+
+        var rs = await _examRepository.CreateAsync(exam);
 
         return Created();
     }
+
+  
 
     [HttpPut]
     public async Task<IActionResult> Update(ExamVM ExamVM)
     {
         var Exam = _mapper.Map<Exam>(ExamVM);
 
-        var result = await _ExamRepository.UpdateAsync(Exam);
+        var result = await _examRepository.UpdateAsync(Exam);
 
         return Ok(result);
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var result = await _ExamRepository.DeleteAsync(id);
+        var result = await _examRepository.DeleteAsync(id);
 
         return Ok(result);
     }

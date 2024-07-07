@@ -8,9 +8,10 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<LessonVM,Lesson>().ReverseMap();
-        CreateMap<StudentVM,Student>().ReverseMap();
-        CreateMap<ExamVM,Exam>().ReverseMap();
+        CreateMap<LessonVM, Lesson>().ReverseMap();
+        CreateMap<StudentVM, Student>().ReverseMap();
+        CreateMap<ExamVM, Exam>().ReverseMap();
+        CreateMap<ExamDTO, Exam>().ReverseMap();
     }
 
 

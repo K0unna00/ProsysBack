@@ -34,15 +34,17 @@ namespace ProsysBack.Migrations
                     b.Property<decimal>("Grade")
                         .HasColumnType("decimal(1, 0)");
 
-                    b.Property<string>("LessonCode")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
+                    b.Property<Guid>("LessonId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("StudentNumber")
-                        .HasColumnType("decimal(5, 0)");
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Exams");
                 });
@@ -106,6 +108,35 @@ namespace ProsysBack.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("ProsysBack.Entities.Exam", b =>
+                {
+                    b.HasOne("ProsysBack.Entities.Lesson", "Lesson")
+                        .WithMany("Exams")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProsysBack.Entities.Student", "Student")
+                        .WithMany("Exams")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("ProsysBack.Entities.Lesson", b =>
+                {
+                    b.Navigation("Exams");
+                });
+
+            modelBuilder.Entity("ProsysBack.Entities.Student", b =>
+                {
+                    b.Navigation("Exams");
                 });
 #pragma warning restore 612, 618
         }

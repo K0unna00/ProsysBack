@@ -29,5 +29,7 @@ public class Lesson : BaseEntity
     [StringLength(20)]
     [Required(ErrorMessage = "Kod daxil edilmelidir")]
     [MaxLength(20, ErrorMessage = "Max uzunluq 20 ola biler!")]
-    public string TeacherSurname { get; set; } 
+    public string TeacherSurname { get; set; }
+
+    public ICollection<Exam> Exams{ get; set; }
 }

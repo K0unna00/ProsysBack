@@ -2,7 +2,7 @@
 
 namespace ProsysBack.Models;
 
-public class ExamVM
+public class ExamDTO
 {
     public Guid Id { get; set; }
 
@@ -13,8 +13,4 @@ public class ExamVM
     public DateTime Date { get; set; }
 
     public decimal Grade { get; set; }
-
-    public Lesson Lesson { get; set; }
-
-    public Student Student { get; set; }
 }

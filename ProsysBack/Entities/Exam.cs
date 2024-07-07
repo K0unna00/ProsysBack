@@ -1,19 +1,22 @@
 ﻿using ProsysBack.Entities.Base;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProsysBack.Entities;
 
 public class Exam : BaseEntity
 {
-    [StringLength(3)]
-    public string LessonCode { get; set; }
+    public Guid LessonId { get; set; }
 
-    [Column(TypeName = "decimal(5, 0)")]
-    public decimal StudentNumber { get; set; }
+    public Guid StudentId { get; set; }
 
     public DateTime Date { get; set; }
 
     [Column(TypeName = "decimal(1, 0)")]
-    public int Grade { get; set; }
+    public decimal Grade { get; set; }
+
+    [ForeignKey("LessonId")]
+    public Lesson Lesson { get; set; }
+
+    [ForeignKey("StudentId")]
+    public Student Student { get; set; }
 }

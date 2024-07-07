@@ -16,7 +16,11 @@ builder.Services.AddScoped<IExamRepository, ExamRepository>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.WriteIndented = true;
+}); ;
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectingString));

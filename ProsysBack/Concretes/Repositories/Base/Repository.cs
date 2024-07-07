@@ -7,9 +7,9 @@ namespace ProsysBack.Concretes.Repositories.Base;
 
 public class Repository<T> : IRepository<T> where T : BaseEntity
 {
-    private AppDbContext _appDbContext;
+    protected AppDbContext _appDbContext;
 
-    private DbSet<T> _table;
+    protected DbSet<T> _table;
 
     public Repository(AppDbContext appDbContext)
     {
@@ -18,7 +18,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         _table = appDbContext.Set<T>();
     }
 
-    public async Task<List<T>> GetAllAsync() => await _table.ToListAsync();
+    public virtual async Task<List<T>> GetAllAsync() => await _table.ToListAsync();
 
     public async Task<T> GetByIdAsync(Guid id) => await _table.FirstOrDefaultAsync(x => x.Id == id) ?? throw new KeyNotFoundException();
 
