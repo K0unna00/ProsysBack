@@ -18,12 +18,22 @@ public class StudentsController : ControllerBase
         _mapper = mapper;
     }
 
+    [HttpGet("get-all-pagination")]
+    public async Task<IActionResult> GetAllPagination([FromQuery] Pagination pagination)
+    {
+        var paginationRs = await _studentRepository.GetAllPaginationAsync(pagination);
+
+        var result = _mapper.Map<PaginationRs<StudentVM>>(paginationRs);
+
+        return Ok(result);
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
         var students = await _studentRepository.GetAllAsync();
 
-        var result =  _mapper.Map<IEnumerable<StudentVM>>(students);
+        var result = _mapper.Map<IEnumerable<StudentVM>>(students);
 
         return Ok(result);
     }
