@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ProsysBack.Abstractions.Repositories;
+using ProsysBack.Concretes.Repositories;
 using ProsysBack.Entities;
 using ProsysBack.Models;
 
@@ -10,16 +11,22 @@ namespace ProsysBack.Controllers;
 public class ExamsController : ControllerBase
 {
     private readonly IExamRepository _examRepository;
-    private readonly IStudentRepository _studentRepository;
-    private readonly ILessonRepository _lessonRepository;
     private readonly IMapper _mapper;
 
-    public ExamsController(IExamRepository ExamRepository,IStudentRepository studentRepository,ILessonRepository lessonRepository, IMapper mapper)
+    public ExamsController(IExamRepository ExamRepository, IMapper mapper)
     {
         _examRepository = ExamRepository;
-        _studentRepository = studentRepository;
-        _lessonRepository = lessonRepository;
         _mapper = mapper;
+    }
+
+    [HttpGet("get-all-pagination")]
+    public async Task<IActionResult> GetAllPagination([FromQuery] Pagination pagination)
+    {
+        var paginationRs = await _examRepository.GetAllPaginationAsync(pagination);
+
+        var result = _mapper.Map<PaginationRs<ExamVM>>(paginationRs);
+
+        return Ok(result);
     }
 
     [HttpGet]

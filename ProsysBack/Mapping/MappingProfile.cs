@@ -13,6 +13,8 @@ public class MappingProfile : Profile
         CreateMap<ExamVM, Exam>().ReverseMap();
         CreateMap<ExamDTO, Exam>().ReverseMap();
         CreateMap<PaginationRs<StudentVM>, PaginationRs<Student>>().ReverseMap();
+        CreateMap<PaginationRs<LessonVM>, PaginationRs<Lesson>>().ReverseMap();
+        CreateMap<PaginationRs<Exam>, PaginationRs<ExamVM>>().ReverseMap();
     }
 
 

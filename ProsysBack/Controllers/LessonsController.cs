@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProsysBack.Abstractions.Repositories;
 using ProsysBack.Entities;
@@ -17,6 +16,16 @@ public class LessonsController : ControllerBase
     {
         _LessonRepository = LessonRepository;
         _mapper = mapper;
+    }
+
+    [HttpGet("get-all-pagination")]
+    public async Task<IActionResult> GetAllPagination([FromQuery] Pagination pagination)
+    {
+        var paginationRs = await _LessonRepository.GetAllPaginationAsync(pagination);
+
+        var result = _mapper.Map<PaginationRs<LessonVM>>(paginationRs);
+
+        return Ok(result);
     }
 
     [HttpGet]
